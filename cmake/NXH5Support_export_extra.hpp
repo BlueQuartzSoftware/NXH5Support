@@ -1,0 +1,6 @@
+
+#if defined(_MSC_VER) || defined(__APPLE__)
+#define NXH5SUPPORT_TEMPLATE_EXPORT NXH5SUPPORT_EXPORT
+#else
+#define NXH5SUPPORT_TEMPLATE_EXPORT
+#endif
