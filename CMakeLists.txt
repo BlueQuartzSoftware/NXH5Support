@@ -33,9 +33,7 @@ find_package(fmt CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(expected-lite CONFIG REQUIRED)
 find_package(span-lite CONFIG REQUIRED)
-find_package(Eigen3 REQUIRED)
 find_package(HDF5 REQUIRED)
-find_package(boost_mp11 CONFIG REQUIRED)
 find_package(NXCommon REQUIRED)
 
 if(NXCOMMON_ENABLE_MULTICORE)
@@ -81,14 +79,10 @@ if(UNIX)
     )
 endif()
 
-get_target_property(hdf5_dll_path HDF5::HDF5 IMPORTED_LOCATION_<CONFIG>)
-get_filename_component(hdf5_dll_path "${hdf5_dll_path}" DIRECTORY)
-
-# Copy HDF5 DLL
-add_custom_command(TARGET NXH5Support POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    ${hdf5_dll_path}
-    $<TARGET_FILE_DIR:NXH5Support>)
+if(NXCOMMON_ENABLE_MULTICORE)
+    target_compile_definitions(NXH5Support PUBLIC "NXCOMMON_ENABLE_MULTICORE")
+    target_link_libraries(NXH5Support PUBLIC TBB::tbb)
+endif()
 
 option(NXH5SUPPORT_ENABLE_LINK_FILESYSTEM "Enables linking to a C++ filesystem library" OFF)
 
@@ -102,8 +96,8 @@ if(NXH5SUPPORT_ENABLE_LINK_FILESYSTEM)
 endif()
 
 set(NXH5SUPPORT_GENERATED_DIR ${NXH5Support_BINARY_DIR}/generated)
-set(NXH5SUPPORT_GENERATED_HEADER_DIR ${NXH5Support_BINARY_DIR}/generated/NXH5Support)
-set(NXH5SUPPORT_EXPORT_HEADER ${NXH5SUPPORT_GENERATED_HEADER_DIR}/NXH5Support_export.hpp)
+set(NXH5SUPPORT_GENERATED_HEADER_DIR ${NXH5Support_BINARY_DIR}/generated/NX/H5Support)
+set(NXH5SUPPORT_EXPORT_HEADER ${NXH5SUPPORT_GENERATED_HEADER_DIR}/NXH5SUPPORT_EXPORT.hpp)
 
 include(GenerateExportHeader)
 generate_export_header(NXH5Support
@@ -111,7 +105,7 @@ generate_export_header(NXH5Support
     CUSTOM_CONTENT_FROM_VARIABLE NXH5SUPPORT_EXPORT_HEADER_EXTRA
 )
 
-set(NXH5SUPPORT_SOURCE_DIR ${NXH5Support_SOURCE_DIR}/src/NXH5Support)
+set(NXH5SUPPORT_SOURCE_DIR ${NXH5Support_SOURCE_DIR}/src/NX/H5Support)
 
 set(NXH5SUPPORT_HDRS
     ${NXH5SUPPORT_SOURCE_DIR}/H5.hpp
@@ -238,13 +232,13 @@ if(NXH5SUPPORT_ENABLE_INSTALL)
     )
 
     install_with_directory(FILES ${NXH5SUPPORT_HDRS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/NXH5Support
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/NX/H5Support
         COMPONENT develop
         BASE_DIR ${NXH5SUPPORT_SOURCE_DIR}
     )
 
     install_with_directory(FILES ${NXH5SUPPORT_GENERATED_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/NXH5Support
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/NX/H5Support
         COMPONENT develop
         BASE_DIR ${NXH5SUPPORT_GENERATED_HEADER_DIR}
     )

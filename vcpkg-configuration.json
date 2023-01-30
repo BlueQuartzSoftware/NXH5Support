@@ -1,0 +1,23 @@
+{
+  "default-registry": null,
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/mmarineBlueQuartz/complex-registry",
+      "packages": [
+        "catch2",
+        "expected-lite",
+        "fmt",
+        "h5support",
+        "hdf5",
+        "nlohmann-json",
+        "span-lite",
+        "nxcommon",
+        "tbb",
+        "vcpkg-cmake",
+        "vcpkg-cmake-config"
+      ],
+      "baseline": "d7099250da3d52e31f757d4a43b89cbcdf7a60bd"
+    }
+  ]
+}

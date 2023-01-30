@@ -1,8 +1,8 @@
 #include <catch2/catch.hpp>
 
-#include "NXH5Support/IO/DatasetIO.hpp"
-#include "NXH5Support/IO/FileIO.hpp"
-#include "NXH5Support/TestGenConstants.hpp"
+#include "NX/H5Support/IO/DatasetIO.hpp"
+#include "NX/H5Support/IO/FileIO.hpp"
+#include "NX/H5Support/TestGenConstants.hpp"
 
 #include "nonstd/span.hpp"
 #include <vector>
@@ -26,23 +26,26 @@ inline const std::string k_DatasetStringName = "String";
 
 constexpr size_t k_DatasetSize = 10;
 
-inline const std::filesystem::path k_FilePath = NX::H5Support::constants::TestDataDir / k_FileName;
+inline std::filesystem::path targetFilePath()
+{
+  return NX::H5Support::constants::TestDataDir / k_FileName;
+}
 } // namespace
 
 template <typename T>
 void createDataset(NX::H5Support::GroupIO& groupWriter, const std::string& name)
 {
+  constexpr size_t count = k_DatasetSize;
+
   auto datasetWriter = groupWriter.createDataset(name);
   REQUIRE(datasetWriter.isValid());
 
-  constexpr size_t count = k_DatasetSize;
+  const std::vector<uint64_t> dimensions{count};
   std::vector<T> vector(count);
   for(size_t i = 0; i < count; i++)
   {
     vector[i] = static_cast<T>(i);
   }
-
-  const NX::H5Support::DatasetIO::DimsType dimensions{count};
 
   const T* dataPtr = vector.data();
   REQUIRE(datasetWriter.writeSpan(dimensions, nonstd::span<const T>(dataPtr, count)) == 0);
@@ -96,6 +99,7 @@ void checkDatasetf(const NX::H5Support::GroupIO& groupReader, const std::string&
 
 TEST_CASE("File IO", "H5Support")
 {
+  const std::filesystem::path k_FilePath = targetFilePath();
   std::filesystem::remove(k_FilePath);
 
   {

@@ -1,10 +1,10 @@
 #include <catch2/catch.hpp>
 
-#include "NXH5Support/Readers/DatasetReader.hpp"
-#include "NXH5Support/Readers/FileReader.hpp"
-#include "NXH5Support/TestGenConstants.hpp"
-#include "NXH5Support/Writers/DatasetWriter.hpp"
-#include "NXH5Support/Writers/FileWriter.hpp"
+#include "NX/H5Support/Readers/DatasetReader.hpp"
+#include "NX/H5Support/Readers/FileReader.hpp"
+#include "NX/H5Support/TestGenConstants.hpp"
+#include "NX/H5Support/Writers/DatasetWriter.hpp"
+#include "NX/H5Support/Writers/FileWriter.hpp"
 
 #include "nonstd/span.hpp"
 #include <vector>
@@ -28,7 +28,10 @@ inline const std::string k_DatasetStringName = "String";
 
 constexpr size_t k_DatasetSize = 10;
 
-inline const std::filesystem::path k_FilePath = NX::H5Support::constants::TestDataDir / k_FileName;
+inline std::filesystem::path targetFilePath()
+{
+  return NX::H5Support::constants::TestDataDir / k_FileName;
+}
 } // namespace
 
 template <typename T>
@@ -92,6 +95,7 @@ void checkDatasetf(const NX::H5Support::GroupReader& groupReader, const std::str
 TEST_CASE("File Reader/Writer", "H5Support")
 {
   // std::filesystem::remove(k_FilePath);
+  const std::filesystem::path k_FilePath = targetFilePath();
 
   {
     auto fileWriterResult = NX::H5Support::FileWriter::CreateFile(k_FilePath);
