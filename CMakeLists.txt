@@ -194,7 +194,7 @@ if(NXH5SUPPORT_ENABLE_INSTALL)
 
     include(CMakePackageConfigHelpers)
 
-    set(NXH5SUPPORT_INSTALL_CMAKE_PREFIX "lib/cmake")
+    set(NXH5SUPPORT_INSTALL_CMAKE_PREFIX "lib/cmake" CACHE STRING "Relative path to install NXCommonConfig.cmake in")
 
     set(NXH5SUPPORT_CONFIG_FILE ${NXH5Support_BINARY_DIR}/NXH5SupportConfig.cmake)
     set(NXH5SUPPORT_VERSION_FILE ${NXH5Support_BINARY_DIR}/NXH5SupportConfigVersion.cmake)
@@ -242,6 +242,9 @@ if(NXH5SUPPORT_ENABLE_INSTALL)
         COMPONENT develop
         BASE_DIR ${NXH5SUPPORT_GENERATED_HEADER_DIR}
     )
+
+    # Install the LICENSE.txt as copyright to make VCPKG happy
+    install(FILES ${NXH5Support_SOURCE_DIR}/LICENSE.md DESTINATION ${NXH5SUPPORT_INSTALL_CMAKE_PREFIX} RENAME copyright)
 endif()
 
 option(NXH5SUPPORT_ENABLE_PACKAGING "Enables NX::H5Support packaging" ON)
