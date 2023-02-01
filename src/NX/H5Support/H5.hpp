@@ -1,10 +1,11 @@
 #pragma once
 
+#include "NX/Common/Types.hpp"
+#include "NX/H5Support/NXH5SUPPORT_EXPORT.hpp"
+
 #include <cstdint>
 #include <string>
 #include <string_view>
-
-#include "NX/H5Support/NXH5Support_export.hpp"
 
 namespace NX::H5Support
 {
@@ -27,6 +28,13 @@ enum class Type
   string,
   unknown = 255
 };
+
+/**
+ * @brief converts an H5Support enum Type to NX::Common enum type.
+ * @param typeEnum
+ * @return NX::DataType
+ */
+NX::DataType NXH5SUPPORT_EXPORT toCommonType(Type typeEnum);
 
 /**
  * @brief Returns a Type enum representing the corresponding type matching the

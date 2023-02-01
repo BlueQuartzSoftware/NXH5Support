@@ -338,11 +338,11 @@ std::vector<T> DatasetIO::readAsVector() const
   size_t numElements = getNumElements();
 
   std::vector<T> data(numElements);
-  if(!readIntoSpan<T>(nonstd::span(data.data(), data.size())))
+  nonstd::span<T> span(data.data(), data.size());
+  if(!readIntoSpan<T>(span))
   {
     return {};
   }
-
   return data;
 }
 

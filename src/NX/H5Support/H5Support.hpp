@@ -1,7 +1,7 @@
 #pragma once
 
 #include "NX/H5Support/H5.hpp"
-#include "NX/H5Support/NXH5Support_export.hpp"
+#include "NX/H5Support/NXH5SUPPORT_EXPORT.hpp"
 
 #include <H5Ipublic.h>
 #include <H5Ppublic.h>

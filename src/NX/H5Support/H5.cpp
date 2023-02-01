@@ -1,11 +1,42 @@
 #include "H5.hpp"
 
-//#include "H5Support/Utilities/StringUtilities.hpp"
-
 #include <stdexcept>
 #include <vector>
 
 #include <H5Apublic.h>
+
+NX::DataType NX::H5Support::toCommonType(Type typeEnum)
+{
+  switch(typeEnum)
+  {
+  case Type::int8:
+    return DataType::int8;
+  case Type::int16:
+    return DataType::int16;
+  case Type::int32:
+    return DataType::int32;
+  case Type::int64:
+    return DataType::int64;
+  case Type::uint8:
+    return DataType::uint8;
+  case Type::uint16:
+    return DataType::uint16;
+  case Type::uint32:
+    return DataType::uint32;
+  case Type::uint64:
+    return DataType::uint64;
+  case Type::float32:
+    return DataType::float32;
+  case Type::float64:
+    return DataType::float64;
+  case Type::string:
+    [[fallthrough]];
+  case Type::unknown:
+    [[fallthrough]];
+  default:
+    return static_cast<DataType>(-1);
+  }
+}
 
 NX::H5Support::Type NX::H5Support::getTypeFromId(IdType typeId)
 {

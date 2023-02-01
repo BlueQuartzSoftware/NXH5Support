@@ -6,6 +6,7 @@ option(NXH5SUPPORT_BUILD_TESTS "Enable building NXH5SUPPORT tests" ON)
 enable_vcpkg_manifest_feature(TEST_VAR NXH5SUPPORT_BUILD_TESTS FEATURE "tests")
 
 option(NXCOMMON_ENABLE_MULTICORE "Enable multicore support" ON)
+enable_vcpkg_manifest_feature(TEST_VAR NXCOMMON_ENABLE_MULTICORE FEATURE "parallel")
 
 project(NXH5Support
     VERSION 0.1.0

@@ -8,7 +8,7 @@
 
 #include "NX/H5Support/H5.hpp"
 
-#include "NX/H5Support/NXH5Support_export.hpp"
+#include "NX/H5Support/NXH5SUPPORT_EXPORT.hpp"
 
 namespace NX::H5Support
 {

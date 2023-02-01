@@ -1,7 +1,7 @@
 #pragma once
 
 #include "NX/H5Support/IO/GroupIO.hpp"
-#include "NX/H5Support/NXH5Support_export.hpp"
+#include "NX/H5Support/NXH5SUPPORT_EXPORT.hpp"
 
 #include "NX/Common/Result.hpp"
 

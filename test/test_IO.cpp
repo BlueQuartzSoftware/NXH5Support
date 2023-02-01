@@ -40,7 +40,7 @@ void createDataset(NX::H5Support::GroupIO& groupWriter, const std::string& name)
   auto datasetWriter = groupWriter.createDataset(name);
   REQUIRE(datasetWriter.isValid());
 
-  const std::vector<uint64_t> dimensions{count};
+  NX::H5Support::DatasetIO::DimsType dimensions{count};
   std::vector<T> vector(count);
   for(size_t i = 0; i < count; i++)
   {
@@ -48,7 +48,8 @@ void createDataset(NX::H5Support::GroupIO& groupWriter, const std::string& name)
   }
 
   const T* dataPtr = vector.data();
-  REQUIRE(datasetWriter.writeSpan(dimensions, nonstd::span<const T>(dataPtr, count)) == 0);
+  const nonstd::span<const T> span(dataPtr, count);
+  REQUIRE(datasetWriter.writeSpan(dimensions, span) == 0);
 }
 
 template <typename T>

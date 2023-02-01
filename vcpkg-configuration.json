@@ -3,7 +3,7 @@
   "registries": [
     {
       "kind": "git",
-      "repository": "https://github.com/mmarineBlueQuartz/complex-registry",
+      "repository": "https://github.com/bluequartzsoftware/complex-registry",
       "packages": [
         "catch2",
         "expected-lite",
@@ -17,7 +17,7 @@
         "vcpkg-cmake",
         "vcpkg-cmake-config"
       ],
-      "baseline": "d7099250da3d52e31f757d4a43b89cbcdf7a60bd"
+      "baseline": "700b95e94819b0946779defd8771b42a394882d2"
     }
   ]
 }
