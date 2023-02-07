@@ -7,8 +7,6 @@
 
 #include <nonstd/span.hpp>
 
-#include "H5DOpublic.h"
-
 #include <string>
 #include <vector>
 
