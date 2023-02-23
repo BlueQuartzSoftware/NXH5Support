@@ -39,9 +39,10 @@ find_package(HDF5 REQUIRED)
 # -----------------------------------------------------------------------
 # Find NXCommon source directory and add it as an additional project
 # -----------------------------------------------------------------------
-if(NOT DEFINED NXCommon)
+if(NOT DEFINED NXCommon_Added)
     set(NXCOMMON_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../NXCommon" CACHE STRING "Path to NXCommon source directory")
     add_subdirectory(${NXCOMMON_SOURCE_DIR} ${PROJECT_BINARY_DIR}/NXCommon)
+    set(NXCommon_Added TRUE CACHE INTERNAL "")
     install(TARGETS NXCommon
         RUNTIME
         DESTINATION .
