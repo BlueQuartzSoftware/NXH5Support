@@ -35,7 +35,20 @@ find_package(nlohmann_json CONFIG REQUIRED)
 find_package(expected-lite CONFIG REQUIRED)
 find_package(span-lite CONFIG REQUIRED)
 find_package(HDF5 REQUIRED)
-find_package(NXCommon REQUIRED)
+
+# -----------------------------------------------------------------------
+# Find NXCommon source directory and add it as an additional project
+# -----------------------------------------------------------------------
+if(NOT DEFINED NXCommon)
+    set(NXCOMMON_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../NXCommon" CACHE STRING "Path to NXCommon source directory")
+    add_subdirectory(${NXCOMMON_SOURCE_DIR} ${PROJECT_BINARY_DIR}/NXCommon)
+    install(TARGETS NXCommon
+        RUNTIME
+        DESTINATION .
+        COMPONENT runtime
+    )
+endif()
+
 
 if(NXCOMMON_ENABLE_MULTICORE)
     find_package(TBB CONFIG REQUIRED)
@@ -70,7 +83,7 @@ target_link_libraries(NXH5Support
     PUBLIC
     fmt::fmt
     HDF5::HDF5
-    NX::NXCommon
+    NXCommon
 )
 
 if(UNIX)

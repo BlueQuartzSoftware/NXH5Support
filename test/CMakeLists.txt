@@ -6,7 +6,7 @@ add_executable(NXH5Support_test)
 
 target_link_libraries(NXH5Support_test
   PRIVATE
-  NX::H5Support
+  NXH5Support
   Catch2::Catch2
 )
 
